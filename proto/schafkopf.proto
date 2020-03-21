@@ -1,27 +1,27 @@
 syntax = "proto3";
 
-import "google/protobuf/empty.proto";
 
 package schafkopf;
 
-option go_package = "github.com/wechselstrom/schafkopfturnier/proto;schafkopf";
 
 service schafkopf {
-  rpc StartPlaying (google.protobuf.Empty) returns (stream GameEvent) {}
-  rpc Doppeln (DoppelRequest) returns (Response) {}
-  rpc SpielAnsagen (Spieldeklaration) returns (Response) {}
-  rpc KarteSpielen (SpielKarteRequest) returns (Response) {}
-  rpc SendMsg (Message) returns (Response) {}
+  rpc StartPlaying (Empty) returns (stream GameEvent) {}
+  rpc Doppeln (DoppelRequest) returns (Empty) {}
+  rpc SpielAnsagen (Spieldeklaration) returns (Empty) {}
+  rpc KarteSpielen (SpielKarteRequest) returns (Empty) {}
+  rpc SendMsg (Message) returns (Empty) {}
 }
 
 message Message {
   string text=1;
 }
 
+message Empty {
+}
 
 message Response {
   bool success = 1;
-  string message = 2;
+  string text = 2;
 }
 
 message PlayerId {
@@ -101,10 +101,10 @@ enum Wert {
   Sieben = 1;
   Acht = 2;
   Neun = 3;
-  Zehn = 4;
-  Unter = 5;
-  Ober = 6;
-  Koenig = 7;
+  Unter = 4;
+  Ober = 5;
+  Koenig = 6;
+  Zehn = 7;
   Sau = 8;
 }
 
