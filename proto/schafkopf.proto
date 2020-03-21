@@ -1,0 +1,118 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+package schafkopf;
+
+option go_package = "github.com/wechselstrom/schafkopfturnier/proto;schafkopf";
+
+service schafkopf {
+  rpc StartPlaying (google.protobuf.Empty) returns (stream GameEvent) {}
+  rpc Doppeln (DoppelRequest) returns (Response) {}
+  rpc SpielAnsagen (Spieldeklaration) returns (Response) {}
+  rpc KarteSpielen (SpielKarteRequest) returns (Response) {}
+  rpc SendMsg (Message) returns (Response) {}
+}
+
+message Message {
+  string text=1;
+}
+
+
+message Response {
+  bool success = 1;
+  string message = 2;
+}
+
+message PlayerId {
+  string id = 1;
+}
+
+message DoppelRequest {
+  bool doppeln = 1;
+}
+
+message SpielKarteRequest {
+  Karte karte=1;
+}
+
+message GameEvent {
+  oneof eventtype {
+    Spielstart start = 1;
+    Hand erste_hand = 2;
+    Hand zweite_hand = 3;
+    Spieldeklaration spiel = 5;
+    Doppler doppler = 6;
+    Karte gespielt = 7;
+    Spielende ende = 8;
+  }
+}
+
+
+// The request message containing the user's name.
+message Spielstart {
+  repeated string players = 1;
+  uint32 first_player = 3;
+}
+
+message Spielende {
+  repeated string sieger = 1;
+  repeated string verlierer = 2;
+  float betrag  = 3;
+  string kommentar = 4;
+}
+
+message Doppler {
+  string Spieler = 1;
+}
+
+message Hand {
+  repeated Karte received = 1;
+}
+
+message Spieldeklaration {
+  bool hat_spiel = 1;
+  string spieler = 2;
+  Spieltyp spieltyp = 3;
+}
+
+message Spiel {
+  Spieltyp spieltyp = 1;
+  Farbe farbe = 2;
+}
+
+enum Spieltyp {
+  Undefiniert = 0;
+  Ramsch = 1;
+  Sauspiel = 2;
+  Wenz = 3;
+  Geier = 4;
+  Solo = 5;
+}
+
+
+message Karte {
+  Wert wert =1;
+  Farbe farbe = 2;
+}
+
+enum Wert {
+  Keiner = 0;
+  Sieben = 1;
+  Acht = 2;
+  Neun = 3;
+  Zehn = 4;
+  Unter = 5;
+  Ober = 6;
+  Koenig = 7;
+  Sau = 8;
+}
+
+enum Farbe {
+  Natura = 0;
+  Eichel = 1;
+  Grass = 2;
+  Herz = 3;
+  Schellen = 4;
+}
+
