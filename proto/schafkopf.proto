@@ -85,8 +85,8 @@ enum Spieltyp {
   Undefiniert = 0;
   Ramsch = 1;
   Sauspiel = 2;
-  Wenz = 3;
-  Geier = 4;
+  Geier = 3;
+  Wenz = 4;
   Solo = 5;
 }
 
@@ -110,9 +110,9 @@ enum Wert {
 
 enum Farbe {
   Natura = 0;
-  Eichel = 1;
-  Grass = 2;
-  Herz = 3;
-  Schellen = 4;
+  Schellen = 1;
+  Herz = 2;
+  Grass = 3;
+  Eichel = 4;
 }
 
